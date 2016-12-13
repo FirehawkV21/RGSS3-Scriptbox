@@ -105,10 +105,6 @@ end
       hp_color(actor), normal_color)
     end
   end
-#-------------------------------------------------------------------------------
-# Compatibility code for Yanfly's Ace Battle Engine. Uncomment lines 100 to 115
-# before running the game.
-#-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
 # Doing  some overwries on the Window_BattleStatus
