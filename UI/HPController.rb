@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# HP Color Controller - Version R1.00
+# HP Color Controller - Version R1.01
 # Developed by AceOfAces
 # Licensed under GPLv3 license
 #------------------------------------------------------------------------------
@@ -13,6 +13,15 @@
 # If you use a script that modifies the colors on the Window_Base, place this 
 # script below it for maximum compatibility.
 #------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+# Chagnelog:
+# 
+# R1.01
+# -Added the option to change the knockout color.
+#
+# R1.00
+# -Initial release.
+#------------------------------------------------------------------------------
  module FSE
    module HPCONTROL
 #------------------------------------------------------------------------------
@@ -22,7 +31,7 @@
 # This option is used for compatibiity mode. Turn this on if you adjust
 # :hp_gauge1, :hp_gauge2, and :crisis_color from a different script
 # (Yanfly Ace Engine for example). This will ignore :hp_crisis, :hpgaugenomal
-# (1 and 2) on the color settings.
+# (1 and 2) and :hp_ko on the color settings.
  COMPAT_MODE = false
  
 # Adjust the low hp and critical hp limits here. These will be used to check
@@ -34,14 +43,15 @@
 # :hp_low, :hpgauge_low1, hp_gaugelow2, hp_gaugecri1 and hp_gaugecrit2.
    COLOURS ={
     # :text       => ID (found on the Window.png file)
-      :low_hp_text        =>  2,   # Default:  2
-      :hp_crisis          => 18,   # Default: 17
-      :hp_gaugenormal1    => 11,   # Default: 11
-      :hp_gaugenormal2    =>  3,   # Default: 21
-      :hp_gaugelow1       => 14,   # Default: 14
-      :hp_gaugelow2       =>  6,   # Default:  6
-      :hp_gaugecri1       => 18,   # Default: 18
-      :hp_gaugecri2       =>  2,   # Default:  2
+      :low_hp_text        =>  2,  # Default:  2
+      :hp_crisis          => 18,  # Default: 18
+      :hp_ko              => 15,  # Default: 15
+      :hp_gaugenormal1    => 11,  # Default: 11
+      :hp_gaugenormal2    =>  3,  # Default:  3
+      :hp_gaugelow1       => 20,  # Default: 20
+      :hp_gaugelow2       => 21,  # Default:  6
+      :hp_gaugecri1       => 18,  # Default: 18
+      :hp_gaugecri2       =>  2,  # Default:  2
       } #Leave this bracket alone.
  #
  #
@@ -58,6 +68,7 @@ end
 #------------------------------------------------------------------------------
   def hp_crisis_color;   text_color(FSE::HPCONTROL::COLOURS[:hp_crisis]); end;
   def hp_low_color;      text_color(FSE::HPCONTROL::COLOURS[:low_hp_text]); end;
+  def hp_knockout;      text_color(FSE::HPCONTROL::COLOURS[:hp_ko]); end;
   def hp_gaugenormal1;   text_color(FSE::HPCONTROL::COLOURS[:hp_gaugenormal1]); end;
   def hp_gaugenormal2;   text_color(FSE::HPCONTROL::COLOURS[:hp_gaugenormal2]); end;
   def hp_gauge_low1;     text_color(FSE::HPCONTROL::COLOURS[:hp_gaugelow1]); end;
@@ -87,7 +98,8 @@ end
 # Overwrites hp_color
 #--------------------------------------------------------------------------
   def hp_color(actor)
-    return knockout_color if actor.hp == 0
+    return hp_knockout if actor.hp ==0
+    return knockout_color if actor.hp == 0 && FSE::HPCONTROL::COMPAT_MODE
     return hp_crisis_color if (actor.hp < actor.mhp * FSE::HPCONTROL::CRIT_HP)
     return crisis_color if (actor.hp < actor.mhp * FSE::HPCONTROL::CRIT_HP) && FSE::HPCONTROL::COMPAT_MODE
     return hp_low_color if actor.hp > actor.mhp * FSE::HPCONTROL::CRIT_HP && actor.hp < actor.mhp * FSE::HPCONTROL::LOW_HP
