@@ -21,8 +21,8 @@
 
 # This option is used for compatibiity mode. Turn this on if you adjust
 # :hp_gauge1, :hp_gauge2, and :crisis_color from a different script
-# (Yanfly Ace Engine for example). This will ignore :hp_crisis, :hpgaugenomal
-# (1 and 2) on the color settings.
+# (Yanfly Ace Engine for example). This will ignore :hp_crisis, :hpgaugenomal 
+# (1 and 2) and :hp_ko on the color settings.
  COMPAT_MODE = false
  
 # This option enables the extra "Warning" color.
