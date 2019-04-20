@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 # HP Color Controller - Version R1.02
 # Developed by AceOfAces
-# Licensed under GPLv3 license
+# Licensed under the MIT license
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # This script provides additional hp gauge and text colors similar to the
